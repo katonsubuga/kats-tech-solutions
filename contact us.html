@@ -55,6 +55,87 @@ footer a{color:#fff;text-decoration:none;margin:0 10px;}
 
 .success{background:#22C55E;color:#fff;padding:12px;margin-top:15px;border-radius:8px;text-align:center;display:none;}
 
+/* ===== RESPONSIVE DESIGN ===== */
+
+/* Tablets */
+@media (max-width: 1024px) {
+  header {
+    padding: 15px 20px;
+  }
+
+  .hero h2 {
+    font-size: 2.2rem;
+  }
+
+  section {
+    padding: 50px 20px;
+  }
+
+  .video-container video {
+    width: 80%;
+  }
+}
+
+/* Mobile phones */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  nav {
+    margin-top: 10px;
+  }
+
+  nav a {
+    display: inline-block;
+    margin: 8px;
+  }
+
+  .hero {
+    padding: 60px 15px;
+  }
+
+  .hero h2 {
+    font-size: 1.8rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+
+  section {
+    padding: 40px 15px;
+  }
+
+  .card img {
+    height: 180px;
+  }
+
+  .video-container video {
+    width: 100%;
+  }
+
+  .buy-btn {
+    font-size: 11px;
+    padding: 8px 14px;
+  }
+}
+
+/* Very small phones */
+@media (max-width: 480px) {
+  .hero h2 {
+    font-size: 1.5rem;
+  }
+
+  .hero p {
+    font-size: 0.95rem;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+  }
+}
 </style>
 </head>
 <body>
@@ -189,4 +270,5 @@ document.getElementById("orderForm").addEventListener("submit", function(e){
 </footer>
 
 </body>
+
 </html>
