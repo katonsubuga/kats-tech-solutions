@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<htnl>
+<head>
+<style>
+:root{
+  --primary:#0A7CFF;
+  --secondary:#1F2937;
+  --background:#F9FAFB;
+  --accent:#22C55E;
+}
+
+*{box-sizing:border-box;font-family:Arial,Helvetica,sans-serif;}
+body{margin:0;background:var(--background);color:#111;}
+
+header{
+  background:#fff;
+  padding:15px 40px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  box-shadow:0 2px 8px rgba(0,0,0,.1);
+}
+header h1{color:var(--primary);}
+nav a{margin:0 12px;text-decoration:none;color:var(--secondary);font-weight:bold;}
+nav a:hover{color:var(--primary);}
+
+.hero{
+  background:linear-gradient(rgba(10,124,255,.9),rgba(10,124,255,.9)),url('https://images.unsplash.com/photo-1518770660439-4636190af475');
+  background-size:cover;
+  color:#fff;
+  text-align:center;
+  padding:90px 20px;
+}
+.hero h2{font-size:2.8rem;}
+.hero p{font-size:1.2rem;max-width:700px;margin:auto;}
+
+section{padding:70px 40px;max-width:1200px;margin:auto;}
+section h2{text-align:center;color:var(--primary);margin-bottom:40px;}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:25px;}
+.card{background:#fff;padding:25px;border-radius:15px;box-shadow:0 4px 10px rgba(0,0,0,.08);text-align:center;}
+.card img{width:100%;border-radius:10px;height:200px;object-fit:cover;}
+.card h3{margin:15px 0 5px;color:var(--secondary);}
+.card p{font-size:.95rem;}
+.card span{color:var(--accent);font-weight:bold;}
+
+form{background:#fff;padding:30px;border-radius:15px;box-shadow:0 4px 10px rgba(0,0,0,.1);}
+form input,form select,form textarea{
+  width:100%;padding:12px;margin:10px 0;border-radius:8px;border:1px solid #ccc;
+}
+form button{background:var(--accent);color:#fff;border:none;padding:14px;border-radius:25px;font-size:1rem;cursor:pointer;}
+
+footer{background:var(--secondary);color:#fff;text-align:center;padding:30px;}
+footer a{color:#fff;text-decoration:none;margin:0 10px;}
+
+.success{background:#22C55E;color:#fff;padding:12px;margin-top:15px;border-radius:8px;text-align:center;display:none;}
+
+</style>
+</head>
+<body>
+
+<header>
+  <h1>KATS-TECH Solutions</h1>
+  <nav>
+    <a href="Index.html">Home</a>
+    <a href="About us.html">About us</a>
+    <a href="Contact us.html">Contact us</a>
+  </nav>
+</header>
+
+<section id="order">
+<h2>Request Service / Place Order</h2>
+
+<form id="orderForm"
+      action="https://formsubmit.co/katoabdul737@gmail.com"
+      method="POST">
+
+  <input type="text" name="Full Name" required placeholder="Full Name">
+  <input type="tel" name="Phone Number" required placeholder="Phone Number">
+  <input type="tel" name="Location" required placeholder="Location">
+
+  <select name="Service" required>
+    <option value="">-- Select Product / Service --</option>
+      <option>HP Laptop</option>
+    <option>Dell Laptop</option>
+    <option>Lenovo Laptop</option>
+    <option>Other type </option>
+    <option>Computer Repair</option>
+    <option>OS Installation</option>
+    
+  </select>
+
+  <input type="number" name="Amount (UGX)" required placeholder="Amount (UGX)">
+
+  <select name="Payment Method" required>
+    <option>Mobile Money (MTN)</option>
+    <option>Mobile Money (Airtel)</option>
+  </select>
+
+  <textarea name="Request Details"
+            required
+            placeholder="Describe your request / delivery instructions"></textarea>
+
+  <!-- FormSubmit settings -->
+  <input type="hidden" name="_subject" value="NEW ORDER / SERVICE REQUEST">
+  <input type="hidden" name="_captcha" value="false">
+  <input type="hidden" name="_template" value="table">
+
+  <button type="submit">Submit Order</button>
+
+  <div class="success" id="successMsg"
+       style="display:none; color:green; font-weight:bold;">
+    ✅ Order submitted successfully! Seller has been notified.
+  </div>
+
+</form>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+document.getElementById("orderForm").addEventListener("submit", function(e){
+  e.preventDefault();
+
+  const data = new FormData(this);
+
+  // Generate Order ID
+  const orderID = "ORD-" + Date.now().toString().slice(-6);
+
+  let message =
+    "📦 NEW ORDER RECEIVED\n\n" +
+    "Order ID: " + orderID + "\n\n";
+
+  let paymentMethod = "";
+  let amount = "";
+
+  for (let pair of data.entries()) {
+    if (!pair[0].startsWith("_")) {
+      message += pair[0] + ": " + pair[1] + "\n";
+      if (pair[0] === "Payment Method") paymentMethod = pair[1];
+      if (pair[0] === "Amount (UGX)") amount = pair[1];
+    }
+  }
+
+  // Payment instructions
+  message += "\n💰 PAYMENT INSTRUCTIONS:\n";
+
+  if (paymentMethod.includes("MTN")) {
+    message += "Pay UGX " + amount + " to MTN MoMo: 0774140531 (Kato Abdul)\n";
+  } else {
+    message += "Pay UGX " + amount + " to Airtel Money: 0757183568\n";
+  }
+
+  message += "\n📌 Send payment confirmation after payment.";
+
+  // Send to WhatsApp
+  window.open(
+    "https://wa.me/256774140531?text=" + encodeURIComponent(message),
+    "_blank"
+  );
+
+  // Send email (FormSubmit)
+  fetch(this.action, {
+    method: "POST",
+    body: data,
+    headers: { "Accept": "application/json" }
+  });
+
+  document.getElementById("successMsg").style.display = "block";
+  this.reset();
+});
+</script>
+
+
+<footer>
+  <p>&copy; 2026 KATS-TECH Solutions. All Rights Reserved.</p>
+</footer>
+
+</body>
+</html>
